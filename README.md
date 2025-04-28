@@ -1,0 +1,1 @@
+# coredns-rewrite-cname-issue
