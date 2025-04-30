@@ -1,0 +1,7 @@
+.:9053 {
+  bind 0.0.0.0
+
+  log
+
+  file db.example.spotify.cnamed.com example.spotify.cnamed.com
+}

@@ -1,0 +1,21 @@
+.:1053 {
+  bind 0.0.0.0
+
+  log
+
+  cache 60 {
+    success 524288
+    denial 524288
+    keepttl
+  }
+
+  template IN SRV example.spotify.com. {
+    answer "{{ .Name }} 60 IN CNAME example.spotify.cnamed.com."
+  }
+
+  forward example.spotify.cnamed.com. 127.0.0.1:9053 {
+    force_tcp
+  }
+
+  rewrite cname suffix . . 
+}
