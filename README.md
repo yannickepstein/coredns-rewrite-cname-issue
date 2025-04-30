@@ -43,7 +43,7 @@ The client, seeing the TC bit, retries the original query (`SRV example.spotify.
 
 The core issue seems to stem from how the truncated upstream response is processed when both `rewrite cname suffix . .` (triggering internal recursion) and `cache` are active in the downstream instance.
 
-1.  The `forward` plugin successfully receives the truncated UDP response from the upstream.
+1.  The `forward` plugin successfully receives the response marked as truncated from the upstream.
 2.  However, when this result propagates back through the plugin chain (specifically interacting with `rewrite` handling the recursive result and then `cache`), the fact that the data is incomplete (truncated) is seemingly lost before caching occurs.
 3.  The `cache` plugin stores the partial result set received via UDP from the upstream.
 4.  The downstream server *does* correctly signal truncation *to the client* in its initial UDP response, primarily because the combined size (CNAME + partial SRV data) still exceeds UDP limits. (If the combined size were smaller, the client might incorrectly believe it received a complete response).
